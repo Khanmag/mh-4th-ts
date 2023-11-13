@@ -44,10 +44,10 @@ interface Newobj extends User, Book {
 // function getNewInterfase<T,U>(obj1: T, obj2: U): extends T,U {
 //   return Object.assign(obj1, obj2)
 // }
-
-type Person = {name: string; age: number};
-type Book2= {nameBook: string};
-type userBook = Person | Book2
+//
+// type Person = {name: string; age: number};
+// type Book2= {nameBook: string};
+// type userBook = Person | Book2
 
 // function GetNewObj<T,U>(obj1:T, obj2: U): T | U {
 //   return Object.assign(obj1, obj2)
