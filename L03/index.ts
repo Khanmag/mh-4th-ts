@@ -100,32 +100,32 @@ console.log(counter) // Ошибка: свойство недоступно за
 //
 // }
 
-class Rectangle {
-    protected width: number;
-    protected height: number;
-    setWidth(width:number):void {
-        this.width = width;
-    }
-    setHeight(height: number):void {
-        this.height = height;
-    }
-}
-class Square extends Rectangle {
-    setWidth(width: number) {
-        this.width = width;
-        this.height = width;
-    }
-    setHeight(height: number) {
-        this.width = height;
-        this.height = height;
-    }
-}
+// class Rectangle {
+//     protected width: number;
+//     protected height: number;
+//     setWidth(width:number):void {
+//         this.width = width;
+//     }
+//     setHeight(height: number):void {
+//         this.height = height;
+//     }
+// }
+// class Square extends Rectangle {
+//     setWidth(width: number) {
+//         this.width = width;
+//         this.height = width;
+//     }
+//     setHeight(height: number) {
+//         this.width = height;
+//         this.height = height;
+//     }
+// }
 
 class User {
     name: string;
     currentBook: string | null = null;
     constructor(name: string) {
-    this.name = name;
+        this.name = name;
     }
     getBook() {
         // fetch('../project/book.json')
