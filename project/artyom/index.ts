@@ -19,6 +19,7 @@ class AthenaeumUser implements IUser {
   public id: number;
   public name: string;
   public role: AthenaeumRoles;
+  // favorite: number[];
   constructor(obj: IUser) {
     this.id = obj.id;
     this.name = obj.name;
@@ -56,6 +57,7 @@ class AthenaeumAdmin extends AthenaeumUser {
         if (user) {
           const index = users.indexOf(user);
           if (index !== -1) {
+            // users.filter( (item) => item.id !== 3 )
             users.splice(index, 1);
           }
         }
@@ -98,6 +100,7 @@ interface IBook {
   title: string;
   year?: number;
 }
+
 
 // Book class
 class Book {
@@ -187,31 +190,31 @@ class Search {
 }
 
 // Review class
-class Review {
-  constructor(
-    public book: Book,
-    public user: User,
-    public rating: number,
-    public comment: string
-  ) {}
-}
+// class Review {
+//   constructor(
+//     public book: Book,
+//     public user: User,
+//     public rating: number,
+//     public comment: string
+//   ) {}
+// }
 
 // Favorite class
-class Favorite {
-  private favorites: Book[];
+// class Favorite {
+//   private favorites: Book[];
 
-  constructor() {
-    this.favorites = [];
-  }
+//   constructor() {
+//     this.favorites = [];
+//   }
 
-  addFavorite(book: Book): void {
-    this.favorites.push(book);
-  }
+//   addFavorite(book: Book): void {
+//     this.favorites.push(book);
+//   }
 
-  removeFavorite(book: Book): void {
-    const index = this.favorites.indexOf(book);
-    if (index !== -1) {
-      this.favorites.splice(index, 1);
-    }
-  }
-}
+//   removeFavorite(book: Book): void {
+//     const index = this.favorites.indexOf(book);
+//     if (index !== -1) {
+//       this.favorites.splice(index, 1);
+//     }
+//   }
+// }

@@ -1,5 +1,6 @@
 // --- <<< User >>> ---
-const enum UserRole {
+// const Admin = "ADMIN"
+enum UserRole {
     Reader = "reader",
     Administrator = "administrator",
     Librarian = "librarian",
@@ -15,7 +16,8 @@ class User implements UserInterface {
     id: number;
     name: string;
     email: string;
-    role: UserRole;
+    role: UserRole; // "Admin" | "User" | "Librarian"
+    // favoriteList: string[];
 //     // users: string[];
     constructor(user: UserInterface) {
         this.id = user.id;
@@ -23,6 +25,9 @@ class User implements UserInterface {
         this.email = user.email;
         this.role = user.role;
 //         // this.users = [];
+    }
+    getBook():void {
+
     }
 //     // addUser(user: NewUser) {
 //     //     this.users.push(new User({id: 0 ,name: 'weew',email: 'we' ,role: UserRole.Admininistrator}));
@@ -99,6 +104,8 @@ class UserReader extends User {
 // // }
 
 
+
+
 // --- <<< Catalog >>> ---
 interface BookInterface {
     isbn: number;
@@ -113,7 +120,7 @@ class Catalog {
         this.bookList = book;
     }
     addBook(book: BookInterface, user: UserInterface): void {
-        if (user.role === UserRole.Librarian) {
+        if (user.role === UserRole.Librarian ) { // === "Admin"
             this.bookList.push(book);
             console.log("Книга добавлена");
         }
@@ -155,7 +162,8 @@ class Library {
     }
     addUser(user: NewUserInterface, admin: UserInterface): void {
         if (admin.role === UserRole.Administrator && user.role === UserRole.Reader) {
-            this.userList.push({id: this.userCount++, name: user.name, email: user.email, role: user.role});
+            const newUser = new User({id: this.userCount++, ...user})
+            this.userList.push(newUser);
             console.log(`Читатель ${user.name} добавлен в базу.`);
         }
     }
@@ -163,8 +171,10 @@ class Library {
         if (admin.role === UserRole.Administrator) {
             const user = this.userList.find( item => item.id == id );
             console.log(user);
-            user.name = newInfo.name;
-            user.email = newInfo.email;
+            if (user) {
+                user.name = newInfo.name;
+                user.email = newInfo.email;
+            }
         }
     }
     deleteUser() {
@@ -178,6 +188,7 @@ class Library {
             }
         }
     }
+    
 }
 
 

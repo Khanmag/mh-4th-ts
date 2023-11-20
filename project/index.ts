@@ -96,3 +96,17 @@ console.log(userManager.userList)
 
 
 
+// const state1 = {
+//     value: 13,
+//     users: 'some',
+// }
+// const state2 = {
+//     value: 25,
+//     users: 'some',
+// }
+// console.log(state1 !== state2);
+// console.log({} !== {});
+
+
+
+

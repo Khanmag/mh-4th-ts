@@ -78,6 +78,11 @@ class Catalog {
                     console.log(`Книга c ISBN: ${changeBookISBN} изменена библиотекарем ${user.name}`)
                 }
             })
+            // const currentBook = this.bookList.find((item) => item.isbn === isbn)
+            // if (currentBook) {
+            //     currentBook.title = 'other name'
+            // } else console.log('Такой книги нет');
+            
         } else console.log("У вас нет прав на редактирование книг!")
     }
     getBookList(user?: IUser) {
@@ -91,6 +96,10 @@ class Catalog {
                 console.log(arrSearh)
             }
         })
+        // const result = this.bookList.filter((item) => item.title.includes(title))
+        // console.log(result);
+
+        // return this.bookList.filter((item) => item.title.includes(title))
     }
 }
 
