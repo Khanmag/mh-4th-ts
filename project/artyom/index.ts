@@ -6,6 +6,7 @@ enum AthenaeumRoles {
   User = "User",
   Admin = "Admin",
   AthenaeumWorker = "AthenaeumWorker",
+  BanUser = "BanUser",
 }
 
 interface IUser {
@@ -14,11 +15,42 @@ interface IUser {
   role: AthenaeumRoles;
 }
 
+interface IBannedUser extends IUser {
+  reasonForBan: string;
+  banExpirationDate: string | "never";
+}
+
+class BanUser implements IBannedUser {
+  id: number;
+  name: string;
+  role: AthenaeumRoles;
+  reasonForBan: string;
+  banExpirationDate: string | "never";
+
+  constructor(obj: IBannedUser) {
+    this.id = obj.id;
+    this.name = obj.name;
+    this.role = obj.role;
+    this.reasonForBan = obj.reasonForBan;
+    this.banExpirationDate = obj.banExpirationDate;
+  }
+
+  changeRoleOnBanExpiration(): void {
+    if (this.banExpirationDate !== "never") {
+      const currentDate = new Date().toISOString().split("T")[0];
+      if (currentDate === this.banExpirationDate) {
+        this.role = AthenaeumRoles.User;
+      }
+    }
+  }
+}
+
 // User class
 class AthenaeumUser implements IUser {
-  public id: number;
-  public name: string;
-  public role: AthenaeumRoles;
+  id: number;
+  name: string;
+  role: AthenaeumRoles;
+  // favorite: number[];
   constructor(obj: IUser) {
     this.id = obj.id;
     this.name = obj.name;
@@ -56,6 +88,7 @@ class AthenaeumAdmin extends AthenaeumUser {
         if (user) {
           const index = users.indexOf(user);
           if (index !== -1) {
+            // users.filter( (item) => item.id !== 3 )
             users.splice(index, 1);
           }
         }
@@ -64,10 +97,6 @@ class AthenaeumAdmin extends AthenaeumUser {
         if (user && newRole) {
           user.role = newRole;
         }
-        break;
-      // case "ban"
-      default:
-        // Другие возможные действия
         break;
     }
   }
@@ -101,14 +130,14 @@ interface IBook {
 
 // Book class
 class Book {
-  public author: string | undefined;
-  public country: string | undefined;
-  public imageLink: string | undefined;
-  public language: string | undefined;
-  public link: string | undefined;
-  public pages: number | undefined;
-  public title: string;
-  public year: number | undefined;
+  author: string | undefined;
+  country: string | undefined;
+  imageLink: string | undefined;
+  language: string | undefined;
+  link: string | undefined;
+  pages: number | undefined;
+  title: string;
+  year: number | undefined;
 
   constructor(obj: IBook) {
     this.author = obj.author;
@@ -169,10 +198,16 @@ class Catalog {
   }
 
   searchBooks(criteria: any): Book[] {
-    // Реализация поиска книг
+    const { author, country, language, title, year } = criteria;
+
     return this.books.filter((book) => {
-      // реализация критериев поиска
-      return true;
+      return (
+        (!author || book.author === author) &&
+        (!country || book.country === country) &&
+        (!language || book.language === language) &&
+        (!title || book.title.includes(title)) &&
+        (!year || book.year === year)
+      );
     });
   }
 }
@@ -187,31 +222,31 @@ class Search {
 }
 
 // Review class
-class Review {
-  constructor(
-    public book: Book,
-    public user: User,
-    public rating: number,
-    public comment: string
-  ) {}
-}
+// class Review {
+//   constructor(
+//      book: Book,
+//      user: User,
+//      rating: number,
+//      comment: string
+//   ) {}
+// }
 
 // Favorite class
-class Favorite {
-  private favorites: Book[];
+// class Favorite {
+//   private favorites: Book[];
 
-  constructor() {
-    this.favorites = [];
-  }
+//   constructor() {
+//     this.favorites = [];
+//   }
 
-  addFavorite(book: Book): void {
-    this.favorites.push(book);
-  }
+//   addFavorite(book: Book): void {
+//     this.favorites.push(book);
+//   }
 
-  removeFavorite(book: Book): void {
-    const index = this.favorites.indexOf(book);
-    if (index !== -1) {
-      this.favorites.splice(index, 1);
-    }
-  }
-}
+//   removeFavorite(book: Book): void {
+//     const index = this.favorites.indexOf(book);
+//     if (index !== -1) {
+//       this.favorites.splice(index, 1);
+//     }
+//   }
+// }
