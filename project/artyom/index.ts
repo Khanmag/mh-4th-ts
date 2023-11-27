@@ -98,6 +98,10 @@ class AthenaeumAdmin extends AthenaeumUser {
           user.role = newRole;
         }
         break;
+      // case "ban"
+      default:
+        // Другие возможные действия
+        break;
     }
   }
 }
